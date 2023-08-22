@@ -6,14 +6,15 @@ volumes:
 
 services:
   postgres:
-    container_name: postgres
-    image: 'postgres:latest'
+    container_name: timescaledb
+    image: 'timescale/timescaledb-ha:pg14-latest'
     environment:
       POSTGRES_DB: testdb
       POSTGRES_PASSWORD: password
       POSTGRES_USER: pguser
     volumes:
       - postgres:/data/postgres
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - '5432'
     restart: unless-stopped
